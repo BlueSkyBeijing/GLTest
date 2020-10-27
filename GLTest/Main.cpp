@@ -1,19 +1,41 @@
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 
-void Render()
+int main(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glRectf(0.0f, 0.0f, 0.5f, 0.5f);
-	glFlush();
-}
-int main(int argc, char* argv[])
-{
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(800, 600);
-	glutCreateWindow("OpenGL Test");
-	glutDisplayFunc(Render);
-	glutMainLoop();
-	return 0;
+    GLFWwindow* window;
+
+    if (!glfwInit())
+        return -1;
+
+    window = glfwCreateWindow(480, 320, "Hello World", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        glBegin(GL_TRIANGLES);
+
+        glColor3f(1.0, 0.0, 0.0);
+        glVertex3f(0.0, 1.0, 0.0);
+
+        glColor3f(0.0, 1.0, 0.0); 
+        glVertex3f(-1.0, -1.0, 0.0);
+
+        glColor3f(0.0, 0.0, 1.0);
+        glVertex3f(1.0, -1.0, 0.0);
+
+        glEnd();
+
+        glfwSwapBuffers(window);
+
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
+    return 0;
 }
